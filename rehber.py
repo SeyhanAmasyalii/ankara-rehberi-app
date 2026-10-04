@@ -19,14 +19,20 @@ def acik_mi(lokanta: Lokanta, saat: int) -> bool:
     else:
         return saat >= lokanta.acilis or saat < lokanta.kapanis
 
-if __name__ == "__main__":
-    kebapci = Lokanta("Kebapci Iskender", "Kizilay", 11, 22)
-    meyhane = Lokanta("Gece Lokantasi", "Ulus", 18, 2)
 
-    print("Kebapci 12:00 ->", acik_mi(kebapci, 12))   # True olmali
-    print("Kebapci 23:00 ->", acik_mi(kebapci, 23))   # False olmali
-    print("Meyhane 01:00 ->", acik_mi(meyhane, 1))    # True olmali  (gece yarisini geciyor)
-    print("Meyhane 10:00 ->", acik_mi(meyhane, 10))   # False olmali
-    print("Meyhane 02:00 ->", acik_mi(meyhane, 2))    # ? kapanis saatinde acik mi?
+def acik_olanlar(lokantalar: list[Lokanta], saat: int) -> list[str]:
+    """Verilen saatte acik olan lokantalarin adlarini alfabetik sirayla dondurur."""
+    return sorted(lokanta.ad for lokanta in lokantalar if acik_mi(lokanta, saat))
+
+
+
+if __name__ == "__main__":
+    lokantalar = [
+        Lokanta("Kebapci Iskender", "Kizilay", 11, 22),
+        Lokanta("Gece Lokantasi", "Ulus", 18, 2),
+        Lokanta("Sabah Lokantasi", "Cankaya", 8, 14),
+    ]
+
+    print("01:00'de acik lokantalar:", acik_olanlar(lokantalar, 1))
 
     
