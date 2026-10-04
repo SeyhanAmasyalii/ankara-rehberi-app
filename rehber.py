@@ -12,6 +12,8 @@ class Lokanta:
 
 def acik_mi(lokanta: Lokanta, saat: int) -> bool:
     """Verilen saatte lokanta acik mi? Gece yarisini gecen saatleri de destekler (orn. 18-02)."""
+    if lokanta.acilis == lokanta.kapanis:
+        return True
     if lokanta.acilis <= lokanta.kapanis:
         return lokanta.acilis <= saat < lokanta.kapanis
     else:
