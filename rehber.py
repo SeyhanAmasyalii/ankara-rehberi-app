@@ -25,6 +25,13 @@ def acik_olanlar(lokantalar: list[Lokanta], saat: int) -> list[str]:
     return sorted(lokanta.ad for lokanta in lokantalar if acik_mi(lokanta, saat))
 
 
+def en_erken_acilan(lokantalar: list[Lokanta]) -> str | None:
+    """En erken acilan lokantanin adini; liste bossa None dondurur."""
+    if not lokantalar:
+        return None
+    return min(lokantalar, key=lambda lokanta: lokanta.acilis).ad
+
+
 
 if __name__ == "__main__":
     lokantalar = [

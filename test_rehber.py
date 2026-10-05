@@ -1,6 +1,6 @@
 import pytest
 
-from rehber import Lokanta, acik_mi, acik_olanlar
+from rehber import Lokanta, acik_mi, acik_olanlar, en_erken_acilan
 
 
 @pytest.mark.parametrize(
@@ -72,3 +72,20 @@ def test_acik_lokantalar_alfabetik_siralanir():
     assert acik_olanlar([zeytin, kebapci, ada], 12) == ["Ada", "Kebapci", "Zeytin"]
 
 
+def test_en_erken_acilan_lokantanin_adini_doner():
+    gece_lokantasi = Lokanta("Gece Lokantasi", "Ulus", 18, 2)
+    sabah_lokantasi = Lokanta("Sabah Lokantasi", "Cankaya", 8, 14)
+    kebapci = Lokanta("Kebapci", "Kizilay", 11, 22)
+
+    assert en_erken_acilan([gece_lokantasi, kebapci, sabah_lokantasi]) == "Sabah Lokantasi"
+
+
+def test_en_erken_acilan_bos_liste_icin_none_doner():
+    assert en_erken_acilan([]) is None
+
+
+def test_en_erken_acilan_esit_saatte_ilk_lokantayi_doner():
+    ilk_lokanta = Lokanta("Ilk Lokanta", "Kizilay", 8, 14)
+    ikinci_lokanta = Lokanta("Ikinci Lokanta", "Ulus", 8, 18)
+
+    assert en_erken_acilan([ilk_lokanta, ikinci_lokanta]) == "Ilk Lokanta"
