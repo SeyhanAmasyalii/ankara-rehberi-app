@@ -14,7 +14,7 @@ def acik_mi(lokanta: Lokanta, saat: int) -> bool:
     if lokanta.acilis <= lokanta.kapanis:
         return lokanta.acilis <= saat < lokanta.kapanis
     else:
-        return saat >= lokanta.acilis or saat <= lokanta.kapanis
+        return saat >= lokanta.acilis or saat < lokanta.kapanis
 
 
 def acik_olanlar(lokantalar: list[Lokanta], saat: int) -> list[str]:
