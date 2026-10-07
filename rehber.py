@@ -1,10 +1,14 @@
 # Ankara Rehberi: lokantalarin acik olup olmadigini hesaplar
 import argparse
+import sys
 from datetime import datetime
 from pathlib import Path
-import sys
+from zoneinfo import ZoneInfo
 
 from veri import Lokanta, lokantalari_yukle
+
+# Is kurali: saatler Turkiye saatine gore hesaplanir (sunucu UTC olsa bile).
+TURKIYE = ZoneInfo("Europe/Istanbul")
 
 
 def acik_mi(lokanta: Lokanta, saat: int) -> bool:
@@ -40,7 +44,7 @@ def main(argv: list[str] | None = None, simdi: datetime | None = None) -> int:
     )
     args = parser.parse_args(argv)
 
-    saat = args.saat if args.saat is not None else (simdi or datetime.now()).hour
+    saat = args.saat if args.saat is not None else (simdi or datetime.now(TURKIYE)).hour
     lokantalar = lokantalari_yukle(Path(__file__).with_name("lokantalar.json"))
     acik_lokantalar = acik_olanlar(lokantalar, saat)
     print(f"{saat:02d}:00'de acik lokantalar:")
@@ -55,4 +59,3 @@ def main(argv: list[str] | None = None, simdi: datetime | None = None) -> int:
 if __name__ == "__main__":
     sys.stdout.reconfigure(encoding="utf-8")
     raise SystemExit(main())
-    
