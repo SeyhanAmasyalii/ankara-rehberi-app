@@ -11,9 +11,9 @@ def ara() -> str:
     """Lokanta adina gore arama yapar."""
     ad = request.args.get("ad", "")
     baglanti = sqlite3.connect("rehber.db")
-    sonuc = baglanti.execute(f"SELECT * FROM lokanta WHERE ad = '{ad}'").fetchall()
+    sonuc = baglanti.execute("SELECT * FROM lokanta WHERE ad = ?", (ad,)).fetchall()
     return str(sonuc)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
