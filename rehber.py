@@ -1,13 +1,10 @@
 # Ankara Rehberi: lokantalarin acik olup olmadigini hesaplar
-from dataclasses import dataclass
+import argparse
+from datetime import datetime
+from pathlib import Path
+import sys
 
-
-@dataclass
-class Lokanta:
-    ad: str
-    semt: str
-    acilis: int   # saat, 0-23
-    kapanis: int  # saat, 0-23
+from veri import Lokanta, lokantalari_yukle
 
 
 def acik_mi(lokanta: Lokanta, saat: int) -> bool:
@@ -21,7 +18,7 @@ def acik_mi(lokanta: Lokanta, saat: int) -> bool:
 
 
 def acik_olanlar(lokantalar: list[Lokanta], saat: int) -> list[str]:
-    """Verilen saatte acik olan lokantalarin adlarini alfabetik sirayla dondurur."""
+    """Acik lokanta adlarini sirali dondurur; lokanta listesi bossa [] dondurur."""
     return sorted(lokanta.ad for lokanta in lokantalar if acik_mi(lokanta, saat))
 
 
@@ -32,14 +29,30 @@ def en_erken_acilan(lokantalar: list[Lokanta]) -> str | None:
     return min(lokantalar, key=lambda lokanta: lokanta.acilis).ad
 
 
+def main(argv: list[str] | None = None, simdi: datetime | None = None) -> int:
+    """Komut satirindan secilen saatte acik olan lokantalari listeler."""
+    parser = argparse.ArgumentParser(description="Ankara'daki acik lokantalari listele.")
+    parser.add_argument(
+        "--saat",
+        type=int,
+        choices=range(24),
+        help="Kontrol edilecek saat (0-23); verilmezse su anki saat kullanilir.",
+    )
+    args = parser.parse_args(argv)
+
+    saat = args.saat if args.saat is not None else (simdi or datetime.now()).hour
+    lokantalar = lokantalari_yukle(Path(__file__).with_name("lokantalar.json"))
+    acik_lokantalar = acik_olanlar(lokantalar, saat)
+    print(f"{saat:02d}:00'de acik lokantalar:")
+    if acik_lokantalar:
+        for ad in acik_lokantalar:
+            print(f"- {ad}")
+    else:
+        print("- Acik lokanta yok.")
+    return 0
+
 
 if __name__ == "__main__":
-    lokantalar = [
-        Lokanta("Kebapci Iskender", "Kizilay", 11, 22),
-        Lokanta("Gece Lokantasi", "Ulus", 18, 2),
-        Lokanta("Sabah Lokantasi", "Cankaya", 8, 14),
-    ]
-
-    print("01:00'de acik lokantalar:", acik_olanlar(lokantalar, 1))
-
+    sys.stdout.reconfigure(encoding="utf-8")
+    raise SystemExit(main())
     

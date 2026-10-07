@@ -1,0 +1,32 @@
+[
+  {
+    "ad": "Kızılay Esnaf Lokantası",
+    "semt": "Kızılay",
+    "acilis": 11,
+    "kapanis": 22
+  },
+  {
+    "ad": "Ulus Tarihi Lokantası",
+    "semt": "Ulus",
+    "acilis": 8,
+    "kapanis": 17
+  },
+  {
+    "ad": "Bahçelievler Aspava",
+    "semt": "Bahçelievler",
+    "acilis": 12,
+    "kapanis": 3
+  },
+  {
+    "ad": "Kızılay Gece Dönercisi",
+    "semt": "Kızılay",
+    "acilis": 18,
+    "kapanis": 2
+  },
+  {
+    "ad": "Ankara 7/24 Lokantası",
+    "semt": "Çankaya",
+    "acilis": 0,
+    "kapanis": 0
+  }
+]
