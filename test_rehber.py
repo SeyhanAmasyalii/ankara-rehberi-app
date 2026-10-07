@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from rehber import Lokanta, acik_mi, acik_olanlar, en_erken_acilan, main
+from rehber import TURKIYE, Lokanta, acik_mi, acik_olanlar, en_erken_acilan, main
 
 
 @pytest.mark.parametrize(
@@ -117,7 +117,7 @@ def test_main_arguman_verilen_saatte_acik_lokantalari_yazar(
 def test_main_saat_verilmezse_sabitlenen_simdiki_saati_kullanir(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
-    assert main([], simdi=datetime(2025, 1, 1, 9, 30)) == 0
+    assert main([], simdi=datetime(2025, 1, 1, 9, 30, tzinfo=TURKIYE)) == 0
 
     cikti = capsys.readouterr().out
     assert "09:00'de acik lokantalar:" in cikti
